@@ -1,3 +1,4 @@
+from unicodedata import name
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -48,6 +49,8 @@ def sign_up():
             flash('Email already exists.', category='error')
         elif len(email) < 14:
             flash('Enter valid Email Id.', category='Enter valid Email Id')
+        elif email.find(".") >0:
+            flash('Incorrect mail id', category='Email format is incorrect.')
         elif len(first_name) <1:
             flash('First name must be greater than 1 character.', category='Enter valid Email Id')
         elif password1 != password2:
